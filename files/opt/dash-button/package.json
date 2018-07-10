@@ -1,0 +1,17 @@
+{
+    "name": "amazon-dash-button",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "https": "^1.0.0",
+        "node-dash-button": "^0.6.1",
+        "request": "^2.81.0"
+    }
+}
+  
