@@ -1,2 +1,2 @@
 #!/bin/bash -e
-node /opt/dash-button/script.js
+node /opt/dash-button/scripts/script.js
