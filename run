@@ -1,4 +1,4 @@
 #!/bin/bash -e
 
-# Privileged is needed for beeing able to inspect packages in the host system
-docker run -d --name dash-button --net=host --restart unless-stopped --privileged fusonic/amazon-dash-button:latest
+# Privileged is needed for being able to inspect packages in the host system
+docker run -d --name dash-button --net=host --restart unless-stopped --privileged -v $(pwd)/config.json:/config.json fusonic/amazon-dash-buttons:latest

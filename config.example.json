@@ -1,0 +1,28 @@
+{
+  "buttons": [
+    {
+      "mac": "xxxxx",
+      "provider": "xxxxx",
+      "providerConfig": {
+        "listId": "xxxxx",
+        "productName": "xxxxx"
+      }
+    },
+    {
+      "mac": "xxxxx",
+      "provider": "bring",
+      "providerConfig": {
+        "listId": "xxxxx",
+        "productName": "xxxxx"
+      }
+    }
+  ],
+  "providerConfig": {
+    "bring": {
+      "notificationUserId": "xxxxx",
+      "notificationApiKey": "xxxxx",
+      "notificationUserUuid": "xxxxx",
+      "notificationSender": "xxxxx"
+    }
+  }
+}
