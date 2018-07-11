@@ -11,13 +11,13 @@ module.exports = {
 
 function bringHandler(sender, providerConfig) {
     var options = {
-        body: "specification=&purchase=" + encodeURIComponent(sender.providerConfig.productName)
+        body: 'specification=&purchase=' + encodeURIComponent(sender.providerConfig.productName)
     };
 
     request
         .put('https://api.getbring.com/rest/bringlists/' + sender.providerConfig.listId, options)
         .on('response', function (response) {
-            console.log("Bring: Added {" + sender.providerConfig.productName + "} to shopping list {" + sender.providerConfig.listId + "}");
+            console.log('Bring: Added {' + sender.providerConfig.productName + '} to shopping list {' + sender.providerConfig.listId + '}');
             sendNotification(sender, providerConfig);
         });
 }
@@ -41,6 +41,6 @@ function sendNotification(sender, providerConfig) {
     request
         .post('https://api.getbring.com/rest/notifications', options)
         .on('response', function (response) {
-            console.log("Bring: Sent notification for product " + sender.providerConfig.productName);
+            console.log('Bring: Sent notification for product ' + sender.providerConfig.productName);
         });
 }

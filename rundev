@@ -1,4 +1,4 @@
 #!/bin/bash -e
 
 # Privileged is needed for being able to inspect packages in the host system
-docker run -it --rm --net=host --privileged --mount type=bind,source="$(pwd)"/config.json,target=/config.json -v ${PWD}/files/opt/dash-button/scripts:/opt/dash-button/scripts dev/dash-buttons
+docker run -it --rm --net=host --privileged -v $(pwd)/config.json:/config.json -v ${PWD}/files/opt/dash-button/scripts:/opt/dash-button/scripts dev/dash-buttons
