@@ -13,6 +13,8 @@ Object.keys(providerConfig).forEach(function(value) {
     providers[value] = require('./providers/'+ value);
 });
 
+//providers['slack'].dashHandler(button[0], providerConfig['slack']);
+
 // Add handler for each dash-button
 buttonConfig.forEach(function(value) {
     console.log('Configuring Button ' + value.mac + '} for provider ' + value.provider);
@@ -26,3 +28,4 @@ buttonConfig.forEach(function(value) {
 function dashHandler(sender) {
     providers[sender.provider].dashHandler(sender, providerConfig[sender.provider]);
 }
+

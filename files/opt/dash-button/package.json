@@ -12,6 +12,7 @@
         "https": "^1.0.0",
         "node-dash-button": "^0.6.1",
         "request": "^2.81.0",
-        "node-fs": "^0.1.7"
+        "node-fs": "^0.1.7",
+        "@slack/client": "^4.3.1"
     }
 }
