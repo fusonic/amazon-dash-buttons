@@ -26,4 +26,3 @@ buttonConfig.forEach(value => {
 function dashHandler(sender) {
     providers[sender.provider].dashHandler(sender, providerConfig[sender.provider]);
 }
-
