@@ -24,7 +24,7 @@ function postMessage(sender, providerConfig) {
     }
 
     web.chat.postMessage(arguments).then((res) => {
-        console.log('Slack: Sent message ', res.message.text);
+        console.log('Slack: Sent message: ', res.message.text);
     }).catch(error => {
         console.error('Slack: an error occurred: ', error.data.error);
     });

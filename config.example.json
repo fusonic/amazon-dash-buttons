@@ -15,6 +15,16 @@
         "listId": "xxxxx",
         "productName": "xxxxx"
       }
+    },
+    {
+      "mac": "xxxx",
+      "provider": "slack",
+      "providerConfig": {
+        "channel": "xxxx",
+        "username": "dash-bot",
+        "text": ":grin:",
+        "icon_emoji": "true"
+      }
     }
   ],
   "providerConfig": {
@@ -23,6 +33,9 @@
       "notificationApiKey": "xxxxx",
       "notificationUserUuid": "xxxxx",
       "notificationSender": "xxxxx"
+    },
+    "slack": {
+      "token": "xxxx"
     }
   }
 }
