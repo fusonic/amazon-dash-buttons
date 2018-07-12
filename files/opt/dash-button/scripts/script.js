@@ -8,17 +8,15 @@ const buttonConfig = config.buttons;
 const providerConfig = config.providerConfig;
 
 // Load providers
-var providers = {};
-Object.keys(providerConfig).forEach(function(value) {
+let providers = {};
+Object.keys(providerConfig).forEach(value => {
     providers[value] = require('./providers/'+ value);
 });
 
-//providers['slack'].dashHandler(button[0], providerConfig['slack']);
-
 // Add handler for each dash-button
-buttonConfig.forEach(function(value) {
-    console.log('Configuring Button ' + value.mac + '} for provider ' + value.provider);
-    var dash = button(value.mac, null, null, 'all');
+buttonConfig.forEach(value => {
+    console.log('Configuring Button {' + value.mac + '} for provider ' + value.provider);
+    let dash = button(value.mac, null, null, 'all');
     dash.on('detected', function (){
         dashHandler(value);
     });
