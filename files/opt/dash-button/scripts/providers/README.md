@@ -1,8 +1,11 @@
 ## Configure Providers
 Below you can find detailed information and configurations for supported providers.
 
+Please be aware that the provider must have the same name as a js file in the providers folder in order to match the provider.
+
 ### Bring
 Here is a valid configuration for two dash buttons that will add coffee to list X and milk to list Y.
+
 ```json
 {
   "buttons": [
@@ -20,6 +23,7 @@ Here is a valid configuration for two dash buttons that will add coffee to list 
       "providerConfig": {
         "listId": "yyyyy",
         "productName": "Milk"
+      }
     }
   ],
   "providerConfig": {
@@ -40,7 +44,7 @@ The Slack provider uses `chat.postMessage` function from the official Slack api.
 
 The information configured in the providerConfig will be directly forwarded as Arguments to the api.
 
-All available option for this api can be found on the Slack Homepage [here](https://api.slack.com/methods/chat.postMessage).
+All available option for this method can be found on the Slack Homepage [here](https://api.slack.com/methods/chat.postMessage).
 
 Here is an example configuration:
 
@@ -63,6 +67,7 @@ Here is an example configuration:
       "providerConfig": {
         "channel": "DBL8WBMSL",
         "text": "Beep"
+      }
     }
   ],
   "providerConfig": {
@@ -75,4 +80,4 @@ Here is an example configuration:
 
 ```
 
-Note: If an Argument is listet in `providerConfig` and in `buttons.providerConfig` the Argument from `buttons.providerConfig` will override the other.
+Note: If an Argument is listed in `providerConfig` and in `buttons.providerConfig` the Argument from `buttons.providerConfig` will override the other.

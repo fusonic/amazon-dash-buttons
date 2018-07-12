@@ -19,7 +19,7 @@ In order to run this container you'll need docker installed.
 
 #### Run Command
 
-You will have to configure a config.json to configure your Amazon Dash Buttons and give parameters to the Services. 
+You will have to configure a config.json to configure your Amazon Dash Buttons and give information to services. 
 
 To start the docker container use the following command: 
 
@@ -27,7 +27,7 @@ To start the docker container use the following command:
 docker run -d --name dash-button --net=host --restart unless-stopped --privileged -v /pathToConfig.json:/config.json fusonic/amazon-dash-buttons:latest
 ```
 
-Change pathToconfig.json to match your config.json file.
+Change pathToConfig.json to match your config.json file.
 
 ##### Flags needed due to:
 
@@ -87,11 +87,11 @@ A complete config.json could look like this:
 }
 ```
 #### Providers
-Currently the following Providers are supported:
+Currently the following providers are supported:
 * [Bring](https://getbring.com/)
 * [Slack](https://slack.com/)
 
-If the Provider you are looking for is currently not supported, feel free to integrate it into the project. Therefore have a look at the Contribute section.
+If the provider you are looking for is currently not supported, feel free to integrate it into the project. Therefore have a look at the Contribute section.
 
 #### Documentation on Providers
 
@@ -100,7 +100,7 @@ There is a detailed README.md file covering how to configure your config.json in
 You can also find the file here well formated on [Github](https://github.com/fusonic/amazon-dash-buttons/blob/master/files/opt/dash-button/scripts/providers/README.md).
 ### Contribute
 #### Add a new Provider
-To add new Provider you must create a JavaScript file in files/opt/dash-button/scripts/providers/providerName.js and register the provider as a module.
+To add a new provider you must create a JavaScript file in files/opt/dash-button/scripts/providers/providerName.js and register the provider as a module.
 
 ```javascript
 module.exports = {
@@ -110,6 +110,8 @@ module.exports = {
 };
 
 ```
+
+Note: the file must have the same name as the provider declared in the config.json!
 
 The `dashHandler` function is called with two parameters:
 
@@ -141,4 +143,4 @@ We created a rundev file that mounts the scrips folder as a volume, which is use
 
 ### License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License.
