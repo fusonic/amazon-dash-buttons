@@ -8,7 +8,6 @@ You can get the build docker image form here:
 
 ### Prerequisities
 
-
 In order to run this container you'll need docker installed.
 
 * [Windows](https://docs.docker.com/windows/started)
@@ -37,7 +36,7 @@ Change pathToConfig.json to match your config.json file.
 
 #### Create config.json
 
-There is a example.config.json located in the root of the project, where you can see how your config file could look like.
+There is a [config.example.json](config.example.json) located in the root of the project, where you can see how your config file could look like.
 
 Here is an example on how to configure a dash button:
 
@@ -63,7 +62,7 @@ And a provider:
 }
 ```
 
-A complete config.json could look like this:
+A complete [config.json](config.example.json) could look like this:
 
 ```json
 {
@@ -86,8 +85,11 @@ A complete config.json could look like this:
   }
 }
 ```
+
 #### Providers
+
 Currently the following providers are supported:
+
 * [Bring](https://getbring.com/)
 * [Slack](https://slack.com/)
 
@@ -95,12 +97,17 @@ If the provider you are looking for is currently not supported, feel free to int
 
 #### Documentation on Providers
 
-There is a detailed README.md file covering how to configure your config.json in the files/opt/dash-button/scripts/providers/ folder.
+There is a detailed README.md file covering how to configure your config.json [here](files/opt/dash-button/scripts/providers/README.md).
 
 You can also find the file here well formated on [Github](https://github.com/fusonic/amazon-dash-buttons/blob/master/files/opt/dash-button/scripts/providers/README.md).
+
 ### Contribute
+
 #### Add a new Provider
-To add a new provider you must create a JavaScript file in files/opt/dash-button/scripts/providers/providerName.js and register the provider as a module.
+
+To add a new provider you must create a JavaScript file in files/opt/dash-button/scripts/providers/providerName/providerName.js and register the provider as a module.
+
+Here an example on [Slack](files/opt/dash-button/scripts/providers/slack/slack.js)
 
 ```javascript
 module.exports = {
@@ -121,6 +128,7 @@ The `dashHandler` function is called with two parameters:
  With these parameters you can access information declared in the config.json file.
  
 #### Run command for developing
+
 We created a rundev file that mounts the scrips folder as a volume, which is useful for developing new features.
 
 ``` bash
