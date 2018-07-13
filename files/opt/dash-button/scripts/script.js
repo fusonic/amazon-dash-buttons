@@ -10,7 +10,7 @@ const providerConfig = config.providerConfig;
 // Load providers
 let providers = {};
 Object.keys(providerConfig).forEach(value => {
-    providers[value] = require('./providers/'+ value);
+    providers[value] = require('./providers/'+ value + '/' + value);
 });
 
 // Add handler for each dash-button
