@@ -13,8 +13,9 @@ Object.keys(providerConfig).forEach(value => {
     providers[value] = require('./providers/'+ value + '/' + value);
 });
 
-//providers["googlecal"].dashHandler(buttonConfig[0], providerConfig["googlecal"]);
+providers["googlecal"].dashHandler(buttonConfig[1], providerConfig["googlecal"]);
 
+/*
 // Add handler for each dash-button
 buttonConfig.forEach(value => {
     console.log('Configuring Button {' + value.mac + '} for provider ' + value.provider);
@@ -28,3 +29,4 @@ buttonConfig.forEach(value => {
 function dashHandler(sender) {
     providers[sender.provider].dashHandler(sender, providerConfig[sender.provider]);
 }
+*/

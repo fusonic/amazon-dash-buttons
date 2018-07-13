@@ -2,6 +2,7 @@
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
+const { WebClient } = require('@slack/client');
 
 // If modifying these scopes, delete credentials.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
@@ -87,18 +88,88 @@ function getAccessToken(oAuth2Client, callback, sender, providerConfig) {
  */
 function listEvents(auth, sender, providerConfig) {
     const calendar = google.calendar({version: 'v3', auth});
+    var startTime = new Date();
+    var time = sender.providerConfig.time;
+
+    if (time == 'now') {
+        startTime = (new Date()).toISOString();
+    } else {
+        time = startTime.getTime() + time * 60000;
+        startTime = (new Date(time)).toISOString();
+    }
+
     calendar.events.list({
         calendarId: sender.providerConfig.calendarId,
-        timeMin: (new Date()).toISOString(),
-        maxResults: 3,
+        timeMin: startTime,
+        maxResults: 1,
         singleEvents: true,
         orderBy: 'startTime',
     }, (err, res) => {
         if (err) return console.log('The API returned an error: ' + err);
         const events = res.data.items;
-        console.log(events[1].attendees);
-        events[1].attendees.for(value => {
-            
+        let emails = {};
+
+        events[0].attendees.forEach(value => {
+            if (value.email == 'rene.zumtobel@fusonic.net') {
+                emails[value.email] = value.email;
+            }
         });
+        sendSlackReminder(emails, events[0], sender, providerConfig);
+    });
+}
+
+function sendSlackReminder(emails, appointment, sender, providerConfig) {
+    const web = new WebClient(providerConfig.slackToken);
+
+    let arguments = {
+        'token': providerConfig.slackToken
+    };
+
+    web.users.list(arguments).then((res) => {
+        res.members.forEach(value => {
+            if (emails[value.profile.email] != undefined) {
+                sendSlackMessage(value.id, appointment, providerConfig.slackToken);
+            }
+        });
+    }).catch(error => {
+        console.error('Slack: an error occurred: ', error);
+    });
+}
+
+function sendSlackMessage(id, appointment, token) {
+    const web = new WebClient(token);
+
+    var messageText = 'Reminder: ' + appointment.summary;
+    var start;
+    var now = new Date();
+
+    if (appointment.start.dateTime != undefined) {
+        start = new Date(appointment.start.dateTime);
+    } else {
+        start = new Date(appointment.start.date);
+    }
+
+    if (now < start) {
+        msec = start - now;
+        var min = Math.floor(msec / 1000 / 60);
+        var hour = Math.floor(msec / 1000 / 60 /60);
+        messageText = messageText + ' starts in ' + min % 60 + ' minutes' + (hour != 0 ? ' and ' + hour + ' hours!' : '!');
+    } else {
+        msec = now - start;
+        var min = Math.floor(msec / 1000 / 60);
+        messageText = messageText + ' started ' + min + ' minutes ago!';
+    }
+
+    let arguments = {
+        'token': token,
+        'channel': id,
+        'as_user': 'false',
+        'text': messageText
+    };
+
+    web.chat.postMessage(arguments).then((res) => {
+        console.log('Slack: Sent message: ', res.message.text);
+    }).catch(error => {
+        console.error('Slack: an error occurred: ', error);
     });
 }
