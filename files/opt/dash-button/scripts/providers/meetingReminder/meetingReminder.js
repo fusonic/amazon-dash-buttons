@@ -4,9 +4,7 @@ const readline = require('readline');
 const {google} = require('googleapis');
 const { WebClient } = require('@slack/client');
 
-// If modifying these scopes, delete credentials.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
-const TOKEN_PATH = 'credentials.json';
 
 // export module for main script
 module.exports = {
@@ -22,9 +20,7 @@ function meetingReminderHandler(sender, providerConfig) {
     } catch (err) {
         return console.log('Error loading client secret file:', err);
     }
-
 }
-
 
  // Create an OAuth2 client with the given credentials, and then execute the given callback function.
 function authorize(credentials, callback, sender, providerConfig) {
@@ -40,7 +36,6 @@ function authorize(credentials, callback, sender, providerConfig) {
     }
 
     // Check if we have previously stored a token.
-
     if (providerConfig.googleToken != undefined) {
         token = providerConfig.googleToken;
     } else {
@@ -107,9 +102,7 @@ function readEvent(auth, sender, providerConfig) {
         let emails = {};
 
         events[0].attendees.forEach(value => {
-            if (value.email == 'rene.zumtobel@fusonic.net') {
-                emails[value.email] = value.email;
-            }
+            emails[value.email] = value.email;
         });
         sendSlackReminder(emails, events[0], sender, providerConfig);
     });
