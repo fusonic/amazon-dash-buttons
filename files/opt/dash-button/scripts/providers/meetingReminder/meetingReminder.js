@@ -11,50 +11,49 @@ const TOKEN_PATH = 'credentials.json';
 // export module for main script
 module.exports = {
     dashHandler : function (sender, providerConfig) {
-        magic(sender, providerConfig);
+        meetingReminderHandler(sender, providerConfig);
     }
 };
 
-function magic(sender, providerConfig) {
-// Load client secrets from a local file.
+function meetingReminderHandler(sender, providerConfig) {
     try {
-        const content = fs.readFileSync('/opt/dash-button/scripts/providers/client_secret.json');
-        authorize(JSON.parse(content), listEvents, sender, providerConfig);
+        const content = providerConfig.secretFile;
+        authorize(content, readEvent, sender, providerConfig);
     } catch (err) {
         return console.log('Error loading client secret file:', err);
     }
 
 }
 
-/**
- * Create an OAuth2 client with the given credentials, and then execute the
- * given callback function.
- * @param {Object} credentials The authorization client credentials.
- * @param {function} callback The callback to call with the authorized client.
- * @return {function} if error in reading credentials.json asks for a new one.
- */
+
+ // Create an OAuth2 client with the given credentials, and then execute the given callback function.
 function authorize(credentials, callback, sender, providerConfig) {
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     let token = {};
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
 
-    // Check if we have previously stored a token.
-    try {
-        token = fs.readFileSync(TOKEN_PATH);
-    } catch (err) {
-        return getAccessToken(oAuth2Client, callback, sender, providerConfig);
+    if (providerConfig.googleToken != undefined) {
+        token = providerConfig.googleToken;
+    } else {
+        getAccessToken(oAuth2Client, callback, sender, providerConfig);
     }
-    oAuth2Client.setCredentials(JSON.parse(token));
+
+    // Check if we have previously stored a token.
+
+    if (providerConfig.googleToken != undefined) {
+        token = providerConfig.googleToken;
+    } else {
+        return getAccessToken(oAuth2Client, callback, sender, providerConfig, function (res) {
+            console.log(res);
+        });
+    }
+    oAuth2Client.setCredentials(token);
     callback(oAuth2Client, sender, providerConfig);
 }
 
-/**
- * Get and store new token after prompting for user authorization, and then
- * execute the given callback with the authorized OAuth2 client.
- * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
- * @param {getEventsCallback} callback The callback for the authorized client.
- */
+ // Get and store new token after prompting for user authorization, and then
+ // execute the given callback with the authorized OAuth2 client.
 function getAccessToken(oAuth2Client, callback, sender, providerConfig) {
     const authUrl = oAuth2Client.generateAuthUrl({
         access_type: 'offline',
@@ -72,8 +71,9 @@ function getAccessToken(oAuth2Client, callback, sender, providerConfig) {
             oAuth2Client.setCredentials(token);
             // Store the token to disk for later program executions
             try {
-                fs.writeFileSync(TOKEN_PATH, JSON.stringify(token));
-                console.log('Token stored to', TOKEN_PATH);
+                providerConfig['googleToken'] = token;
+                const updateProviderConfig = require('../../script');
+                updateProviderConfig.updateProviderConfig(providerConfig,'meetingReminder');
             } catch (err) {
                 console.error(err);
             }
@@ -82,11 +82,8 @@ function getAccessToken(oAuth2Client, callback, sender, providerConfig) {
     });
 }
 
-/**
- * Lists the next 10 events on the user's primary calendar.
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
- */
-function listEvents(auth, sender, providerConfig) {
+// Reads google calender event and calls send message function
+function readEvent(auth, sender, providerConfig) {
     const calendar = google.calendar({version: 'v3', auth});
     var startTime = new Date();
     var time = sender.providerConfig.time;
@@ -118,6 +115,7 @@ function listEvents(auth, sender, providerConfig) {
     });
 }
 
+// Searches for userIds to send Slack message and calls send function
 function sendSlackReminder(emails, appointment, sender, providerConfig) {
     const web = new WebClient(providerConfig.slackToken);
 
@@ -136,6 +134,7 @@ function sendSlackReminder(emails, appointment, sender, providerConfig) {
     });
 }
 
+// Sends reminder for appointment via Slack
 function sendSlackMessage(id, appointment, token) {
     const web = new WebClient(token);
 
