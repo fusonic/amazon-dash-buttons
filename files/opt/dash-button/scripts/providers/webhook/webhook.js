@@ -12,9 +12,6 @@ function requestHandler(sender, providerConfig) {
     var options  = prepareOptions(sender, providerConfig);
     var url = prepareUrl(sender, providerConfig);
 
-    console.log(url);
-    console.log(options);
-
     if (sender.providerConfig.method == 'post') {
         request
             .post(url, options)
@@ -36,6 +33,8 @@ function prepareOptions(sender, providerConfig) {
     if (sender.providerConfig.headers != undefined) {
         options.headers = sender.providerConfig.headers;
     }
+
+    options.headers['Content-Type'] = 'text/json';
 
     if (sender.providerConfig.body != undefined) {
         options.body = JSON.stringify(sender.providerConfig.body);
