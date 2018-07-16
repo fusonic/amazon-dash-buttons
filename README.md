@@ -93,6 +93,7 @@ Currently the following providers are supported:
 * [Bring](https://getbring.com/)
 * Meeting Reminder (sends a reminder for a Google Calender event via Slack)
 * [Slack](https://slack.com/)
+* Webhook (sending GET and POST requests)
 
 If the provider you are looking for is currently not supported, feel free to integrate it into the project. Therefore have a look at the Contribute section.
 
