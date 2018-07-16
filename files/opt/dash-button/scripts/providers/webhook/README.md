@@ -2,9 +2,9 @@
 
 Webhook allows you to send a simple GET or POST request.
 
-You can configure a default url in the providerConfig.
+You can configure a default url in the `providerConfig` section of your config.json.
 
-In the buttons `providerConfig` you can change the method to post (default being get) and you have the option to add a `body` or `headers`.
+Under `buttons[i].providerConfig` you can change the method to `post` (default being `get`) and you have the option to add a `body` or `headers`.
 Under `parameters ` you can add values that will be added as url parameters.
 
 ```json
