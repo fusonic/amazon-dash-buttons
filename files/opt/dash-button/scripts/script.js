@@ -1,11 +1,11 @@
 const button = require('node-dash-button');
 const fs = require('node-fs');
+const pathToConfig = ('/opt/dash-button/config/config.json');
 
 // Load config.json
-const configJSON = fs.readFileSync('/config.json');
-const config = JSON.parse(configJSON);
-const buttonConfig = config.buttons;
-const providerConfig = config.providerConfig;
+let config = readConfig(pathToConfig);
+let buttonConfig = config['buttons'];
+let providerConfig = config['providerConfig'];
 
 // Load providers
 let providers = {};
@@ -26,3 +26,26 @@ buttonConfig.forEach(value => {
 function dashHandler(sender) {
     providers[sender.provider].dashHandler(sender, providerConfig[sender.provider]);
 }
+
+function readConfig(pathToConfig) {
+    try {
+        return JSON.parse(fs.readFileSync('/opt/dash-button/config/config.json'));
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = {
+    // Function for updating config.json if providerData changed
+    updateProviderConfig: function (provider, providerName) {
+        try {
+            providerConfig[providerName] = provider;
+            config.providerConfig = providerConfig;
+            fs.writeFile(pathToConfig, JSON.stringify(config), 'utf8', function (res) {
+                console.log(res);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+};

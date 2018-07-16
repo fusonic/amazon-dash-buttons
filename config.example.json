@@ -25,6 +25,14 @@
         "text": ":grin:",
         "icon_emoji": "true"
       }
+    },
+    {
+      "mac": "xx:xx:xx:xx:xx:xx",
+      "provider": "meetingReminder",
+      "providerConfig": {
+        "calendarId": "primary",
+        "time": "now"
+      }
     }
   ],
   "providerConfig": {
@@ -36,6 +44,23 @@
     },
     "slack": {
       "token": "xxxx"
+    },
+    "meetingReminder": {
+      "slackToken": "xxxxx",
+      "secretFile": {
+        "installed": {
+          "client_id": "xxxxx",
+          "project_id": "xxxx",
+          "auth_uri": "xxxxx",
+          "token_uri": "xxxxx",
+          "auth_provider_x509_cert_url": "xxxxx",
+          "client_secret": "xxxxx",
+          "redirect_uris": [
+            "xxxxx",
+            "http://localhost"
+          ]
+        }
+      }
     }
   }
 }
