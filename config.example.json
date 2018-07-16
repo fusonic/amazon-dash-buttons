@@ -27,11 +27,22 @@
       }
     },
     {
-      "mac": "xx:xx:xx:xx:xx:xx",
+      "mac": "xxxx",
       "provider": "meetingReminder",
       "providerConfig": {
         "calendarId": "primary",
         "time": "now"
+      }
+    },
+    {
+      "mac": "xxxx",
+      "provider": "webhook",
+      "providerConfig": {
+        "url": "http://httpbin.org/response-headers",
+        "method": "get",
+        "parameters": {
+          "key": "beep"
+        }
       }
     }
   ],
@@ -61,6 +72,9 @@
           ]
         }
       }
+    },
+    "webhook": {
+      "url": "http://httpbin.org/"
     }
   }
 }

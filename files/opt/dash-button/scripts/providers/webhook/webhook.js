@@ -15,18 +15,18 @@ function requestHandler(sender, providerConfig) {
     console.log(url);
     console.log(options);
 
-    if (sender.providerConfig.method == 'get') {
-        request
-            .get(url, options)
-            .on('response', function (response) {
-                console.log('Webhook: GET request to: ' + providerConfig.url + ' was send and returned status Code: ' + response.statusCode);
-            });
-    } else if (sender.providerConfig.method == 'post') {
+    if (sender.providerConfig.method == 'post') {
         request
             .post(url, options)
             .on('response', function (response) {
                 console.log('Webhook: POST request to: ' + providerConfig.url + ' was send and returned status Code: ' + response.statusCode);
             });
+    } else {
+        request
+            .get(url, options)
+            .on('response', function (response) {
+                console.log('Webhook: GET request to: ' + providerConfig.url + ' was send and returned status Code: ' + response.statusCode);
+        });
     }
 }
 

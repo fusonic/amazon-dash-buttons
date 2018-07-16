@@ -23,7 +23,7 @@ Here is an example configuration:
     },
     {
       "mac": "xx:xx:xx:xx:xx:xx",
-      "provider": "bring",
+      "provider": "slack",
       "providerConfig": {
         "channel": "DBL8WBMSL",
         "text": "Beep"
