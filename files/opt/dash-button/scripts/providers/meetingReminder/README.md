@@ -1,4 +1,4 @@
-## Configure Slack
+## Configure Meeting Reminder
 
 The Meeting Reminder takes an event from a given Google Calender and sends a reminder to all attendants on Slack.
 (E-Mail addresses are for finding attendants on Slack)
