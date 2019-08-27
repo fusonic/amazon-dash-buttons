@@ -16,7 +16,7 @@ buttonConfig.forEach(value => {
 
     // Initialize provider if not already
     if (typeof providers[value.provider] === "undefined") {
-        providers[value] = require('./providers/'+ value.provider + '/' + value.provider);
+        providers[value.provider] = require('./providers/'+ value.provider + '/' + value.provider);
     }
 
     // Configure dash button
@@ -30,6 +30,7 @@ buttonConfig.forEach(value => {
 function dashHandler(sender) {
     providers[sender.provider].dashHandler(sender, providerConfig[sender.provider]);
 }
+
 
 function readConfig(pathToConfig) {
     try {
