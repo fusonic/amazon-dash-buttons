@@ -34,29 +34,37 @@ function prepareOptions(sender, providerConfig) {
         }
     };
 
-    if (typeof sender.providerConfig.headers !== "undefined") {
-        options.headers = sender.providerConfig.headers;
-    }
+    if (typeof sender.providerConfig !== "undefined") {
+        if (typeof sender.providerConfig.headers !== "undefined") {
+            options.headers = sender.providerConfig.headers;
+        }
 
-    if (typeof sender.providerConfig.body !== "undefined") {
-        options.body = JSON.stringify(sender.providerConfig.body);
+        if (typeof sender.providerConfig.body !== "undefined") {
+            options.body = JSON.stringify(sender.providerConfig.body);
+        }
     }
 
     return options;
 }
 
 function prepareUrl(sender, providerConfig) {
-    var url = providerConfig.url;
+    var url;
 
-    if (typeof sender.providerConfig.url !== "undefined") {
-        url = sender.providerConfig.url;
+    if (typeof providerConfig !== "undefined" && typeof providerConfig.url !== "undefined") {
+        url = providerConfig.url;
     }
 
-    if (typeof sender.providerConfig.parameters !== "undefined") {
-        url = url + '?';
-        Object.keys(sender.providerConfig.parameters).forEach(key => {
-            url = url + key + "=" + sender.providerConfig.parameters[key];
-        });
+    if (typeof sender.providerConfig !== "undefined") {
+        if (typeof sender.providerConfig.url !== "undefined") {
+            url = sender.providerConfig.url;
+        }
+
+        if (typeof sender.providerConfig.parameters !== "undefined") {
+            url = url + '?';
+            Object.keys(sender.providerConfig.parameters).forEach(key => {
+                url = url + key + "=" + sender.providerConfig.parameters[key];
+            });
+        }
     }
 
     return url;
